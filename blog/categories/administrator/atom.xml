@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Administrator | 0xC0CAC0DA]]></title>
+  <link href="http://PolCPP.github.io/blog/categories/administrator/atom.xml" rel="self"/>
+  <link href="http://PolCPP.github.io/"/>
+  <updated>2014-06-12T19:11:59+01:00</updated>
+  <id>http://PolCPP.github.io/</id>
+  <author>
+    <name><![CDATA[PolCPP]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to install and use Laravel administrator Part 1]]></title>
+    <link href="http://PolCPP.github.io/blog/2014/06/12/how-to-install-and-use-laravel-administrator-part-1/"/>
+    <updated>2014-06-12T16:20:53+01:00</updated>
+    <id>http://PolCPP.github.io/blog/2014/06/12/how-to-install-and-use-laravel-administrator-part-1</id>
+    <content type="html"><![CDATA[<p>Trying to get FrozenNode&rsquo;s laravel administrator bundle to work, i saw that there was no guide that set you up from zero to go with Laravel and administrator. This set of guides will cover the basic Laravel setup with administrator and later on setting up more advanced models.</p>
+
+<!-- more -->
+
+
+<p>First of all we install Laravel, get inside the directory and install frozennode administrator.</p>
+
+<pre><code>composer create-project laravel/laravel admin_project --prefer-dist
+cd admin_project
+composer require frozennode/administrator:dev-master
+</code></pre>
+
+<p>Make sure you add this line to the providers array in <em>/app/config/app.php</em></p>
+
+<pre><code>'Frozennode\Administrator\AdministratorServiceProvider',
+</code></pre>
+
+<p>Once this is done you just have to publish the config and assets into the project with these two commands.</p>
+
+<pre><code>php artisan config:publish frozennode/administrator 
+php artisan asset:publish frozennode/administrator
+</code></pre>
+
+<p>Now we setup the project to work locally on the database.</p>
+
+<ol>
+<li><p>Edit the start.php to add your computer name to the array.</p>
+
+<pre><code> $env = $app-&gt;detectEnvironment(array(
+     'local' =&gt; array('homestead','myComputer'),
+ ));
+</code></pre></li>
+<li><p>Edit app/config/local/database.php with working database settings. If the file doesn&rsquo;t exist make a copy from app/config/database.php</p></li>
+</ol>
+
+
+<p>And it&rsquo;s installed! But we&rsquo;re not done yet.</p>
+
+<h2>Creating a simple auth</h2>
+
+<p>Administrator is auth agnostic so you can use your own custom built auth, Sentry or any plugabble auth system compatible with Laravel, in our case we&rsquo;ll build a simple auth system based on Laravel auth that will let us in.</p>
+
+<p>If you have your own custom login procedure you can completely skip this step.</p>
+
+<p>I&rsquo;m going to use Jeffrey Way generators to make things faster so we install it too.</p>
+
+<pre><code>composer require --dev way/generators:dev-master
+</code></pre>
+
+<p>Like with administrator we add it to providers</p>
+
+<pre><code>'Way\Generators\GeneratorsServiceProvider'
+</code></pre>
+
+<p>Now with al the tools installed, let&rsquo;s get ot work and create the migration and seed.</p>
+
+<pre><code>php artisan generate:migration create_users_table --fields="username:string, email:string, password:string"
+php artisan generate:seed user
+</code></pre>
+
+<p>We edit the UserTableSeeder.php that we generated in <em>app/database/seeds</em> and replace its contents with this.</p>
+
+<pre><code>&lt;?php
+
+class UserTableSeeder extends Seeder {
+
+    public function run()
+    {
+        User::create([
+            'username'   =&gt; 'admin',
+            'email'      =&gt; 'admin@mysite.com',
+            'password'   =&gt; Hash::make('thepass'),
+            'created_at' =&gt; new DateTime(),
+            'updated_at' =&gt; new DateTime()
+        ]);
+    }
+
+}
+</code></pre>
+
+<p>To make it work we&rsquo;ll need to uncomment the following line from DatabaseSeeder.php (same directory as UserTableSeeder).</p>
+
+<pre><code>$this-&gt;call('UserTableSeeder');
+</code></pre>
+
+<p>Now let&rsquo;s migrate the database and seed it before building the login page and it&rsquo;s controllers.</p>
+
+<pre><code>php artisan migrate
+php artisan db:seed
+</code></pre>
+
+<p>And with this we have our database up and running, with a working user. Time to build the controller and templates to be able to log in.</p>
+
+<pre><code>php artisan generate:controller LoginController
+</code></pre>
+
+<p>Before starting to add the controllers we&rsquo;ll add a route editing app/routes.php so Laravel shows us the login page when we go to <em>myCoolSite.com/login</em></p>
+
+<pre><code>Route::controller('/login', 'LoginController');
+</code></pre>
+
+<p>Now we&rsquo;ll edit our login controller and leave it like this.</p>
+
+<pre><code>&lt;?php
+
+class LoginController extends \BaseController {
+
+
+    public function getIndex()
+    {
+        return View::make('login.index');
+    }
+
+    public function postIndex()
+    {
+        $username = Input::get('username');
+        $password = Input::get('password');
+
+        if (Auth::attempt(['username' =&gt; $username, 'password' =&gt; $password]))
+        {
+            return Redirect::intended('/admin');
+        }
+
+        return Redirect::back()
+            -&gt;withInput()
+            -&gt;withErrors('Username or Password are incorrect.');
+    }
+}
+</code></pre>
+
+<p>What we&rsquo;re doing here is pretty simple. When the user navigates to /login we&rsquo;ll display him a login form, and when sendsthat form we&rsquo;ll auth him, in case it fails we&rsquo;ll redirect them back with an error message.</p>
+
+<p>Since we have the controller done let&rsquo;s build the templates</p>
+
+<p>First we build the structure. We&rsquo;ll need a base template that we&rsquo;ll store on <em>app/views/layouts</em>. and then our login.index view that we will store on <em>views/login</em></p>
+
+<p>Let&rsquo;s start with the base template (<em>app/views/layouts/master.blade.php</em>)</p>
+
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang='en'&gt;
+    &lt;head&gt;
+        &lt;meta http-equiv="content-type" content="text/html; charset=UTF-8"&gt; 
+        &lt;meta charset="utf-8"&gt;
+        &lt;meta name='viewport' content='width=device-width, initial-scale=1'&gt;
+
+        &lt;title&gt;@yield('title')&lt;/title&gt; 
+        &lt;link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css'&gt;
+        &lt;style&gt;
+            body {
+                margin-top: 10px;
+            }
+        &lt;/style&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div class='container-fluid'&gt;
+            &lt;div class='row'&gt;
+                @yield('content')
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>Nothing really fancy here we setup some placeholders like the Title and we just get the latest bootstrap (<em>3.1.1</em>) and build some basic html.</p>
+
+<p>Now let&rsquo;s get to the login template which i&rsquo;m basing on <a href="http://bootsnipp.com/snippets/featured/compact-login-form-bs-3">this</a>. So create <em>app/views/login/index.blade.php</em> and add these contents:</p>
+
+<pre><code>@extends('layouts.master')
+
+@section('title') Login @stop
+
+@section('content')
+                &lt;div class="col-md-4 col-md-offset-4"&gt;
+                    &lt;div class="panel panel-default"&gt;
+                        &lt;div class="panel-heading"&gt;
+                            &lt;h3 class="panel-title"&gt;Please sign in&lt;/h3&gt;
+                        &lt;/div&gt;
+                        &lt;div class="panel-body"&gt;
+                            @if ($errors-&gt;has())
+                                @foreach ($errors-&gt;all() as $error)
+                                    &lt;div class='alert-danger alert'&gt;&lt;/div&gt;
+                                @endforeach
+                            @endif
+
+                            
+                            &lt;fieldset&gt;
+                                &lt;div class="form-group"&gt;
+                                        
+                                &lt;/div&gt;
+                                &lt;div class="form-group"&gt;
+                                    
+                                &lt;/div&gt;
+                                    
+                            &lt;/fieldset&gt;
+                            
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+@stop
+</code></pre>
+
+<p>And that it. If we run it using <strong>php artisan serve</strong> navigate to localhost:8000/login and try to login with incorrect credentials will fail, and if we set the correct ones we&rsquo;ll get redirected to /admin which will give us an administrator error, because we haven&rsquo;t configured it yet!</p>
+
+<h2>Configuring administrator and our first &ldquo;model-admin&rdquo;</h2>
+
+<p>First of all we&rsquo;ll need to create a few directories as per our config.</p>
+
+<p>Open <em>app/config/packages/frozennode/administrator/administrator.php</em> (if you don&rsquo;t have it make sure you ran <em>php artisan config:publish frozennode/administrator</em> on the first step.)</p>
+
+<p>Administrato needs a few directories and files to work that are setup on the following variables</p>
+
+<pre><code>'model_config_path' =&gt; app('path') . '/config/administrator',
+'settings_config_path' =&gt; app('path') . '/config/administrator/settings',
+</code></pre>
+
+<p>You can change those values to existant directories or just create the path, in our case we&rsquo;ll create <em>app/config/administrator</em> and <em>app/config/administrator/settings</em>.</p>
+
+<p>Next we&rsquo;ll need to add a menu option so administrator shows someting on it (it&rsquo;s required). So we&rsquo;ll edit the menu array and add &lsquo;users&rsquo;. It&rsquo;s important that the menu names are the same than the ones from the model config options, including case.</p>
+
+<pre><code>'menu' =&gt; array('users'),
+</code></pre>
+
+<p>We&rsquo;ll also edit the home_page so it displays us the users editor when we go to /admin.</p>
+
+<pre><code>'home_page' =&gt; 'users',  
+</code></pre>
+
+<p>Finally since our login page is /login we need to change the login_path variable to login</p>
+
+<pre><code>'login_path' =&gt; 'login',
+</code></pre>
+
+<p>And that&rsquo;s all for now. If you try to load we&rsquo;ll still get an error, that&rsquo;s because we haven&rsquo;t configured the user model editor, so time to create our users.php in <em>app/config/administrator</em>.</p>
+
+<pre><code>    &lt;?php
+
+    /**
+     * Users model config
+     */
+
+    return array(
+
+        'title' =&gt; 'Users',
+        'single' =&gt; 'user',
+        'model' =&gt; 'User',
+
+        'columns' =&gt; array(
+            'email' =&gt; array(
+                'title' =&gt; 'Email',
+            ),
+            'username' =&gt; array(
+                'title' =&gt; 'First Name',
+            ),
+        ),
+
+        'edit_fields' =&gt; array(
+            'email' =&gt; array(
+                'title' =&gt; 'Email',
+                'type' =&gt; 'text',
+            ),
+            'username' =&gt; array(
+                'title' =&gt; 'Username',
+                'type' =&gt; 'text',
+            ),
+            'password' =&gt; array(
+                'title' =&gt; 'Password',
+                'type' =&gt; 'password',
+            ),
+        ),
+    );
+</code></pre>
+
+<p>That seems a lot of code but it&rsquo;s pretty simple.</p>
+
+<ol>
+<li><p>Title. Refers to the page/menu titles.</p></li>
+<li><p>Single. The singular name of the model. It&rsquo;s used to fill the administrator texts like the &ldquo;Create User&rdquo; button.</p></li>
+<li><p>Model. The model name.</p></li>
+<li><p>Columns. The columns you want to display on the list viewer of the model.</p></li>
+<li><p>Edit_fields. The fields you want to be able to edit/create. If you want to know more details on the fields, check the <a href="http://administrator.frozennode.com/docs/fields">following site</a></p></li>
+</ol>
+
+
+<p>There are a lot of configurable settings so check <a href="http://administrator.frozennode.com/docs/model-configuration">http://administrator.frozennode.com/docs/model-configuration</a> to see all that you can build with administrator.</p>
+
+<p>And that&rsquo;s it. There are a few details that you should have in mind though. First is that if we leave it like this the passwords that we save will be stored in plain text and won&rsquo;t work for authorization. But you can fix that easily adding this mutator to the User model.</p>
+
+<pre><code>public function setPasswordAttribute($value)
+{
+    $this-&gt;attributes['password']  = $value;
+}
+</code></pre>
+
+<p>And we&rsquo;re done, kinda, try to add an user and leave it blank. Even if we have nulls on our database it saves blank characters, and we shouldn&rsquo;t allow that. Don&rsquo;t worry, validation to the rescue. Add this to the model and we will have validation.</p>
+
+<pre><code>private $rules = array(
+        'username' =&gt; 'required',
+        'email' =&gt; 'required|email|unique:users',
+        'password' =&gt; 'required|min:8',        
+);    
+</code></pre>
+
+<p>I recommend you to put those validation rules on the model instead of using the administrator rules option. The reaons is that on fields like password that has mutators it would give false positives since hashing an empty value would create a hash that would pass the validation.</p>
+
+<p>And that&rsquo;s all for Part 1. On part 2 we&rsquo;ll create a real case of a view/admin and add it to this project.</p>
+]]></content>
+  </entry>
+  
+</feed>

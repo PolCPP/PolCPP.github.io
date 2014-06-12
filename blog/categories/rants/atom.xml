@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Rants | 0xC0CAC0DA]]></title>
+  <link href="http://PolCPP.github.io/blog/categories/rants/atom.xml" rel="self"/>
+  <link href="http://PolCPP.github.io/"/>
+  <updated>2014-06-12T19:11:59+01:00</updated>
+  <id>http://PolCPP.github.io/</id>
+  <author>
+    <name><![CDATA[PolCPP]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Hello World]]></title>
+    <link href="http://PolCPP.github.io/blog/2014/06/11/hello-world/"/>
+    <updated>2014-06-11T16:12:53+01:00</updated>
+    <id>http://PolCPP.github.io/blog/2014/06/11/hello-world</id>
+    <content type="html"><![CDATA[<p>So here i am starting another blog, but this time on octopress.</p>
+
+<p>I&rsquo;ve Been using wordpress and other platforms (like tumblr) for a while but i keep stopping writing because they&rsquo;re heavy and clunky, i forget their passwords and urls plus i rather write things in markdown.</p>
+
+<p>And what the heck, using github to host your blog? That&rsquo;s awesome!</p>
+]]></content>
+  </entry>
+  
+</feed>
