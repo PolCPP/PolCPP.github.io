@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Laravel | 0xC0CAC0DA]]></title>
   <link href="http://PolCPP.github.io/blog/categories/laravel/atom.xml" rel="self"/>
   <link href="http://PolCPP.github.io/"/>
-  <updated>2014-06-14T20:23:36+01:00</updated>
+  <updated>2014-06-14T20:24:17+01:00</updated>
   <id>http://PolCPP.github.io/</id>
   <author>
     <name><![CDATA[PolCPP]]></name>
@@ -272,6 +272,8 @@ class LoginController extends \BaseController {
 
 <p>And that&rsquo;s all for now. If you try to load we&rsquo;ll still get an error, that&rsquo;s because we haven&rsquo;t configured the user model editor, so time to create our users.php in <em>app/config/administrator</em>.</p>
 
+<p>```</p>
+
 <pre><code>    &lt;?php
 
     /**
@@ -309,6 +311,8 @@ class LoginController extends \BaseController {
         ),
     );
 </code></pre>
+
+<p>```</p>
 
 <p>That seems a lot of code but it&rsquo;s pretty simple.</p>
 

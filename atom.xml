@@ -4,7 +4,7 @@
   <title><![CDATA[0xC0CAC0DA]]></title>
   <link href="http://PolCPP.github.io/atom.xml" rel="self"/>
   <link href="http://PolCPP.github.io/"/>
-  <updated>2014-06-14T20:23:36+01:00</updated>
+  <updated>2014-06-14T20:24:17+01:00</updated>
   <id>http://PolCPP.github.io/</id>
   <author>
     <name><![CDATA[PolCPP]]></name>
@@ -285,40 +285,72 @@ class LoginController extends \BaseController {
 @stop
 </code></pre>
 
-<p>&#8220;`</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>And that it. If we run it using **php artisan serve** navigate to localhost:8000/login and try to login with incorrect credentials will fail, and if we set the correct ones we'll get redirected to /admin which will give us an administrator error, because we haven't configured it yet!
+</span><span class='line'>
+</span><span class='line'>##Configuring administrator and our first "model-admin"
+</span><span class='line'>
+</span><span class='line'>First of all we'll need to create a few directories as per our config.
+</span><span class='line'>
+</span><span class='line'>Open *app/config/packages/frozennode/administrator/administrator.php* (if you don't have it make sure you ran *php artisan config:publish frozennode/administrator* on the first step.) 
+</span><span class='line'>
+</span><span class='line'>Administrato needs a few directories and files to work that are setup on the following variables
+</span><span class='line'>
+</span><span class='line'>  'model_config_path' =&gt; app('path') . '/config/administrator',
+</span><span class='line'>  'settings_config_path' =&gt; app('path') . '/config/administrator/settings',
+</span><span class='line'>
+</span><span class='line'>You can change those values to existant directories or just create the path, in our case we'll create *app/config/administrator* and *app/config/administrator/settings*.
+</span><span class='line'>
+</span><span class='line'>Next we'll need to add a menu option so administrator shows someting on it (it's required). So we'll edit the menu array and add 'users'. It's important that the menu names are the same than the ones from the model config options, including case.
+</span><span class='line'>
+</span><span class='line'>  'menu' =&gt; array('users'),
+</span><span class='line'>
+</span><span class='line'>We'll also edit the home_page so it displays us the users editor when we go to /admin. 
+</span><span class='line'>
+</span><span class='line'>  'home_page' =&gt; 'users',  
+</span><span class='line'> 
+</span><span class='line'>Finally since our login page is /login we need to change the login_path variable to login
+</span><span class='line'>
+</span><span class='line'>  'login_path' =&gt; 'login',
+</span><span class='line'>
+</span><span class='line'>And that's all for now. If you try to load we'll still get an error, that's because we haven't configured the user model editor, so time to create our users.php in *app/config/administrator*.
+</span></code></pre></td></tr></table></div></figure>
 
-<p>And that it. If we run it using <strong>php artisan serve</strong> navigate to localhost:8000/login and try to login with incorrect credentials will fail, and if we set the correct ones we&rsquo;ll get redirected to /admin which will give us an administrator error, because we haven&rsquo;t configured it yet!</p>
-
-<h2>Configuring administrator and our first &ldquo;model-admin&rdquo;</h2>
-
-<p>First of all we&rsquo;ll need to create a few directories as per our config.</p>
-
-<p>Open <em>app/config/packages/frozennode/administrator/administrator.php</em> (if you don&rsquo;t have it make sure you ran <em>php artisan config:publish frozennode/administrator</em> on the first step.)</p>
-
-<p>Administrato needs a few directories and files to work that are setup on the following variables</p>
-
-<pre><code>'model_config_path' =&gt; app('path') . '/config/administrator',
-'settings_config_path' =&gt; app('path') . '/config/administrator/settings',
-</code></pre>
-
-<p>You can change those values to existant directories or just create the path, in our case we&rsquo;ll create <em>app/config/administrator</em> and <em>app/config/administrator/settings</em>.</p>
-
-<p>Next we&rsquo;ll need to add a menu option so administrator shows someting on it (it&rsquo;s required). So we&rsquo;ll edit the menu array and add &lsquo;users&rsquo;. It&rsquo;s important that the menu names are the same than the ones from the model config options, including case.</p>
-
-<pre><code>'menu' =&gt; array('users'),
-</code></pre>
-
-<p>We&rsquo;ll also edit the home_page so it displays us the users editor when we go to /admin.</p>
-
-<pre><code>'home_page' =&gt; 'users',  
-</code></pre>
-
-<p>Finally since our login page is /login we need to change the login_path variable to login</p>
-
-<pre><code>'login_path' =&gt; 'login',
-</code></pre>
-
-<p>And that&rsquo;s all for now. If you try to load we&rsquo;ll still get an error, that&rsquo;s because we haven&rsquo;t configured the user model editor, so time to create our users.php in <em>app/config/administrator</em>.</p>
 
 <pre><code>    &lt;?php
 
@@ -357,6 +389,8 @@ class LoginController extends \BaseController {
         ),
     );
 </code></pre>
+
+<p>&#8220;`</p>
 
 <p>That seems a lot of code but it&rsquo;s pretty simple.</p>
 
