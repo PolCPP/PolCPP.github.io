@@ -4,7 +4,7 @@
   <title><![CDATA[Category: FrozenNode | 0xC0CAC0DA]]></title>
   <link href="http://PolCPP.github.io/blog/categories/frozennode/atom.xml" rel="self"/>
   <link href="http://PolCPP.github.io/"/>
-  <updated>2014-06-14T20:14:05+01:00</updated>
+  <updated>2014-06-14T20:23:02+01:00</updated>
   <id>http://PolCPP.github.io/</id>
   <author>
     <name><![CDATA[PolCPP]]></name>
@@ -100,7 +100,7 @@ class UserTableSeeder extends Seeder {
 }
 </code></pre>
 
-<p>```</p>
+<p>``</p>
 
 <p>To make it work we&rsquo;ll need to uncomment the following line from DatabaseSeeder.php (same directory as UserTableSeeder).</p>
 
@@ -343,6 +343,8 @@ class LoginController extends \BaseController {
 <p>I recommend you to put those validation rules on the model instead of using the administrator rules option. The reaons is that on fields like password that has mutators it would give false positives since hashing an empty value would create a hash that would pass the validation.</p>
 
 <p>And that&rsquo;s all for Part 1. On part 2 we&rsquo;ll create a real case of a view/admin and add it to this project.</p>
+
+<p>You can clone/view the repo of this project <a href="https://github.com/PolCPP/Laravel-administrator-tutorial">here</a></p>
 ]]></content>
   </entry>
   
