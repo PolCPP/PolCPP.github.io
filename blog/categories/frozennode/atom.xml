@@ -4,7 +4,7 @@
   <title><![CDATA[Category: FrozenNode | 0xC0CAC0DA]]></title>
   <link href="http://PolCPP.github.io/blog/categories/frozennode/atom.xml" rel="self"/>
   <link href="http://PolCPP.github.io/"/>
-  <updated>2014-06-14T20:24:17+01:00</updated>
+  <updated>2014-06-14T20:27:45+01:00</updated>
   <id>http://PolCPP.github.io/</id>
   <author>
     <name><![CDATA[PolCPP]]></name>
@@ -100,7 +100,7 @@ class UserTableSeeder extends Seeder {
 }
 </code></pre>
 
-<p>``</p>
+<p>```</p>
 
 <p>To make it work we&rsquo;ll need to uncomment the following line from DatabaseSeeder.php (same directory as UserTableSeeder).</p>
 
@@ -160,9 +160,9 @@ class LoginController extends \BaseController {
 
 <p>Since we have the controller done let&rsquo;s build the templates</p>
 
-<p>First we build the structure. We&rsquo;ll need a base template that we&rsquo;ll store on <em>app/views/layouts</em>. and then our login.index view that we will store on <em>views/login</em></p>
+<p>First we&rsquo;re going to build the structure. We&rsquo;ll need a base template that we&rsquo;ll store on <em>app/views/layouts</em>. and then our login.index view that we will store on <em>views/login</em></p>
 
-<p>Let&rsquo;s start with the base template (<em>app/views/layouts/master.blade.php</em>)</p>
+<p>So let&rsquo;s start with the base template (<em>app/views/layouts/master.blade.php</em>)</p>
 
 <p>
 ```</p>
@@ -247,7 +247,7 @@ class LoginController extends \BaseController {
 
 <p>Open <em>app/config/packages/frozennode/administrator/administrator.php</em> (if you don&rsquo;t have it make sure you ran <em>php artisan config:publish frozennode/administrator</em> on the first step.)</p>
 
-<p>Administrato needs a few directories and files to work that are setup on the following variables</p>
+<p>Administrator needs a few directories and files to work that are setup on the following variables</p>
 
 <pre><code>'model_config_path' =&gt; app('path') . '/config/administrator',
 'settings_config_path' =&gt; app('path') . '/config/administrator/settings',

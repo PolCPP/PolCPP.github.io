@@ -4,7 +4,7 @@
   <title><![CDATA[0xC0CAC0DA]]></title>
   <link href="http://PolCPP.github.io/atom.xml" rel="self"/>
   <link href="http://PolCPP.github.io/"/>
-  <updated>2014-06-14T20:24:17+01:00</updated>
+  <updated>2014-06-14T20:27:45+01:00</updated>
   <id>http://PolCPP.github.io/</id>
   <author>
     <name><![CDATA[PolCPP]]></name>
@@ -96,27 +96,6 @@ php artisan generate:seed user
 <span class='line-number'>14</span>
 <span class='line-number'>15</span>
 <span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>&lt;?php
 </span><span class='line'>
 </span><span class='line'>class UserTableSeeder extends Seeder {
@@ -132,57 +111,31 @@ php artisan generate:seed user
 </span><span class='line'>      ]);
 </span><span class='line'>  }
 </span><span class='line'>
-</span><span class='line'>}
-</span><span class='line'>``
-</span><span class='line'>
-</span><span class='line'>To make it work we'll need to uncomment the following line from DatabaseSeeder.php (same directory as UserTableSeeder).
-</span><span class='line'>
-</span><span class='line'>$this-&gt;call('UserTableSeeder');
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>Now let's migrate the database and seed it before building the login page and it's controllers.
-</span><span class='line'>
-</span><span class='line'>php artisan migrate
-</span><span class='line'>php artisan db:seed
-</span><span class='line'>
-</span><span class='line'>And with this we have our database up and running, with a working user. Time to build the controller and templates to be able to log in.
-</span><span class='line'>
-</span><span class='line'>php artisan generate:controller LoginController
-</span><span class='line'>
-</span><span class='line'>Before starting to add the controllers we'll add a route editing app/routes.php so Laravel shows us the login page when we go to *myCoolSite.com/login*
-</span><span class='line'>
-</span><span class='line'>Route::controller('/login', 'LoginController');
-</span><span class='line'>
-</span><span class='line'>Now we'll edit our login controller and leave it like this.
-</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>&lt;?php
+<p>To make it work we&rsquo;ll need to uncomment the following line from DatabaseSeeder.php (same directory as UserTableSeeder).</p>
 
-class LoginController extends \BaseController {
-
-
-    public function getIndex()
-    {
-        return View::make('login.index');
-    }
-
-    public function postIndex()
-    {
-        $username = Input::get('username');
-        $password = Input::get('password');
-
-        if (Auth::attempt(['username' =&gt; $username, 'password' =&gt; $password]))
-        {
-            return Redirect::intended('/admin');
-        }
-
-        return Redirect::back()
-            -&gt;withInput()
-            -&gt;withErrors('Username or Password are incorrect.');
-    }
-}
+<pre><code>$this-&gt;call('UserTableSeeder');
 </code></pre>
+
+<p>Now let&rsquo;s migrate the database and seed it before building the login page and it&rsquo;s controllers.</p>
+
+<pre><code>php artisan migrate
+php artisan db:seed
+</code></pre>
+
+<p>And with this we have our database up and running, with a working user. Time to build the controller and templates to be able to log in.</p>
+
+<pre><code>php artisan generate:controller LoginController
+</code></pre>
+
+<p>Before starting to add the controllers we&rsquo;ll add a route editing app/routes.php so Laravel shows us the login page when we go to <em>myCoolSite.com/login</em></p>
+
+<pre><code>Route::controller('/login', 'LoginController');
+</code></pre>
+
+<p>Now we&rsquo;ll edit our login controller and leave it like this.</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -194,42 +147,55 @@ class LoginController extends \BaseController {
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'>What we're doing here is pretty simple. When the user navigates to /login we'll display him a login form, and when sendsthat form we'll auth him, in case it fails we'll redirect them back with an error message.
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;?php
 </span><span class='line'>
-</span><span class='line'>Since we have the controller done let's build the templates
+</span><span class='line'>class LoginController extends \BaseController {
 </span><span class='line'>
-</span><span class='line'>First we build the structure. We'll need a base template that we'll store on *app/views/layouts*. and then our login.index view that we will store on *views/login*
-</span><span class='line'>
-</span><span class='line'>Let's start with the base template (*app/views/layouts/master.blade.php*)
-</span><span class='line'>
-</span><span class='line'></span></code></pre></td></tr></table></div></figure>
+</span><span class='line'> 
+</span><span class='line'>  public function getIndex()
+</span><span class='line'>  {
+</span><span class='line'>      return View::make('login.index');
+</span><span class='line'>  }
+</span><span class='line'> 
+</span><span class='line'>  public function postIndex()
+</span><span class='line'>  {
+</span><span class='line'>      $username = Input::get('username');
+</span><span class='line'>      $password = Input::get('password');
+</span><span class='line'> 
+</span><span class='line'>      if (Auth::attempt(['username' =&gt; $username, 'password' =&gt; $password]))
+</span><span class='line'>      {
+</span><span class='line'>          return Redirect::intended('/admin');
+</span><span class='line'>      }
+</span><span class='line'> 
+</span><span class='line'>      return Redirect::back()
+</span><span class='line'>          -&gt;withInput()
+</span><span class='line'>          -&gt;withErrors('Username or Password are incorrect.');
+</span><span class='line'>  }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang='en'&gt;
-    &lt;head&gt;
-        &lt;meta http-equiv="content-type" content="text/html; charset=UTF-8"&gt; 
-        &lt;meta charset="utf-8"&gt;
-        &lt;meta name='viewport' content='width=device-width, initial-scale=1'&gt;
+<p>What we&rsquo;re doing here is pretty simple. When the user navigates to /login we&rsquo;ll display him a login form, and when sendsthat form we&rsquo;ll auth him, in case it fails we&rsquo;ll redirect them back with an error message.</p>
 
-        &lt;title&gt;@yield('title')&lt;/title&gt; 
-        &lt;link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css'&gt;
-        &lt;style&gt;
-            body {
-                margin-top: 10px;
-            }
-        &lt;/style&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-        &lt;div class='container-fluid'&gt;
-            &lt;div class='row'&gt;
-                @yield('content')
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
+<p>Since we have the controller done let&rsquo;s build the templates</p>
+
+<p>First we&rsquo;re going to build the structure. We&rsquo;ll need a base template that we&rsquo;ll store on <em>app/views/layouts</em>. and then our login.index view that we will store on <em>views/login</em></p>
+
+<p>So let&rsquo;s start with the base template (<em>app/views/layouts/master.blade.php</em>)</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -240,50 +206,48 @@ class LoginController extends \BaseController {
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;!DOCTYPE html&gt;
+</span><span class='line'>&lt;html lang='en'&gt;
+</span><span class='line'>  &lt;head&gt;
+</span><span class='line'>      &lt;meta http-equiv="content-type" content="text/html; charset=UTF-8"&gt; 
+</span><span class='line'>      &lt;meta charset="utf-8"&gt;
+</span><span class='line'>      &lt;meta name='viewport' content='width=device-width, initial-scale=1'&gt;
 </span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>Nothing really fancy here we setup some placeholders like the Title and we just get the latest bootstrap version (*3.1.1*) and build some basic html. 
-</span><span class='line'>
-</span><span class='line'>Now let's get to the login template which i'm basing on [this](http://bootsnipp.com/snippets/featured/compact-login-form-bs-3). So create *app/views/login/index.blade.php* and add these contents:
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'></span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>      &lt;title&gt;@yield('title')&lt;/title&gt; 
+</span><span class='line'>      &lt;link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css'&gt;
+</span><span class='line'>      &lt;style&gt;
+</span><span class='line'>          body {
+</span><span class='line'>              margin-top: 10px;
+</span><span class='line'>          }
+</span><span class='line'>      &lt;/style&gt;
+</span><span class='line'>  &lt;/head&gt;
+</span><span class='line'>  &lt;body&gt;
+</span><span class='line'>      &lt;div class='container-fluid'&gt;
+</span><span class='line'>          &lt;div class='row'&gt;
+</span><span class='line'>              @yield('content')
+</span><span class='line'>          &lt;/div&gt;
+</span><span class='line'>      &lt;/div&gt;
+</span><span class='line'>  &lt;/body&gt;
+</span><span class='line'>&lt;/html&gt;</span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>@extends('layouts.master')
+<p>Nothing really fancy here we setup some placeholders like the Title and we just get the latest bootstrap version (<em>3.1.1</em>) and build some basic html.</p>
 
-@section('title') Login @stop
-
-@section('content')
-&lt;div class="col-md-4 col-md-offset-4"&gt;
-        &lt;div class="panel panel-default"&gt;
-                &lt;div class="panel-heading"&gt;
-                        &lt;h3 class="panel-title"&gt;Please sign in&lt;/h3&gt;
-                &lt;/div&gt;
-                &lt;div class="panel-body"&gt;
-                        @if ($errors-&gt;has())
-                                @foreach ($errors-&gt;all() as $error)
-                                        &lt;div class='alert-danger alert'&gt;{{ $error }}&lt;/div&gt;
-                                @endforeach
-                        @endif
-
-                        {{ Form::open(['role' =&gt; 'form']) }}
-                        &lt;fieldset&gt;
-                                &lt;div class="form-group"&gt;
-                                        {{ Form::text('username', null, ['placeholder' =&gt; 'Username', 'class' =&gt; 'form-control']) }}
-                                &lt;/div&gt;
-                                &lt;div class="form-group"&gt;
-                                        {{ Form::password('password', ['placeholder' =&gt; 'Password', 'class' =&gt; 'form-control']) }}
-                                &lt;/div&gt;
-                                        {{ Form::submit('Login', ['class' =&gt; 'btn btn-primary']) }}
-                        &lt;/fieldset&gt;
-                        {{ Form::close() }}
-                &lt;/div&gt;
-        &lt;/div&gt;
-&lt;/div&gt;
-@stop
-</code></pre>
+<p>Now let&rsquo;s get to the login template which i&rsquo;m basing on <a href="http://bootsnipp.com/snippets/featured/compact-login-form-bs-3">this</a>. So create <em>app/views/login/index.blade.php</em> and add these contents:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -317,80 +281,148 @@ class LoginController extends \BaseController {
 <span class='line-number'>30</span>
 <span class='line-number'>31</span>
 <span class='line-number'>32</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@extends('layouts.master')
 </span><span class='line'>
+</span><span class='line'>@section('title') Login @stop
 </span><span class='line'>
+</span><span class='line'>@section('content')
+</span><span class='line'>&lt;div class="col-md-4 col-md-offset-4"&gt;
+</span><span class='line'>        &lt;div class="panel panel-default"&gt;
+</span><span class='line'>                &lt;div class="panel-heading"&gt;
+</span><span class='line'>                        &lt;h3 class="panel-title"&gt;Please sign in&lt;/h3&gt;
+</span><span class='line'>                &lt;/div&gt;
+</span><span class='line'>                &lt;div class="panel-body"&gt;
+</span><span class='line'>                        @if ($errors-&gt;has())
+</span><span class='line'>                                @foreach ($errors-&gt;all() as $error)
+</span><span class='line'>                                        &lt;div class='alert-danger alert'&gt;{{ $error }}&lt;/div&gt;
+</span><span class='line'>                                @endforeach
+</span><span class='line'>                        @endif
 </span><span class='line'>
-</span><span class='line'>And that it. If we run it using **php artisan serve** navigate to localhost:8000/login and try to login with incorrect credentials will fail, and if we set the correct ones we'll get redirected to /admin which will give us an administrator error, because we haven't configured it yet!
-</span><span class='line'>
-</span><span class='line'>##Configuring administrator and our first "model-admin"
-</span><span class='line'>
-</span><span class='line'>First of all we'll need to create a few directories as per our config.
-</span><span class='line'>
-</span><span class='line'>Open *app/config/packages/frozennode/administrator/administrator.php* (if you don't have it make sure you ran *php artisan config:publish frozennode/administrator* on the first step.) 
-</span><span class='line'>
-</span><span class='line'>Administrato needs a few directories and files to work that are setup on the following variables
-</span><span class='line'>
-</span><span class='line'>  'model_config_path' =&gt; app('path') . '/config/administrator',
-</span><span class='line'>  'settings_config_path' =&gt; app('path') . '/config/administrator/settings',
-</span><span class='line'>
-</span><span class='line'>You can change those values to existant directories or just create the path, in our case we'll create *app/config/administrator* and *app/config/administrator/settings*.
-</span><span class='line'>
-</span><span class='line'>Next we'll need to add a menu option so administrator shows someting on it (it's required). So we'll edit the menu array and add 'users'. It's important that the menu names are the same than the ones from the model config options, including case.
-</span><span class='line'>
-</span><span class='line'>  'menu' =&gt; array('users'),
-</span><span class='line'>
-</span><span class='line'>We'll also edit the home_page so it displays us the users editor when we go to /admin. 
-</span><span class='line'>
-</span><span class='line'>  'home_page' =&gt; 'users',  
-</span><span class='line'> 
-</span><span class='line'>Finally since our login page is /login we need to change the login_path variable to login
-</span><span class='line'>
-</span><span class='line'>  'login_path' =&gt; 'login',
-</span><span class='line'>
-</span><span class='line'>And that's all for now. If you try to load we'll still get an error, that's because we haven't configured the user model editor, so time to create our users.php in *app/config/administrator*.
-</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>                        {{ Form::open(['role' =&gt; 'form']) }}
+</span><span class='line'>                        &lt;fieldset&gt;
+</span><span class='line'>                                &lt;div class="form-group"&gt;
+</span><span class='line'>                                        {{ Form::text('username', null, ['placeholder' =&gt; 'Username', 'class' =&gt; 'form-control']) }}
+</span><span class='line'>                                &lt;/div&gt;
+</span><span class='line'>                                &lt;div class="form-group"&gt;
+</span><span class='line'>                                        {{ Form::password('password', ['placeholder' =&gt; 'Password', 'class' =&gt; 'form-control']) }}
+</span><span class='line'>                                &lt;/div&gt;
+</span><span class='line'>                                        {{ Form::submit('Login', ['class' =&gt; 'btn btn-primary']) }}
+</span><span class='line'>                        &lt;/fieldset&gt;
+</span><span class='line'>                        {{ Form::close() }}
+</span><span class='line'>                &lt;/div&gt;
+</span><span class='line'>        &lt;/div&gt;
+</span><span class='line'>&lt;/div&gt;
+</span><span class='line'>@stop</span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>    &lt;?php
+<p>And that it. If we run it using <strong>php artisan serve</strong> navigate to localhost:8000/login and try to login with incorrect credentials will fail, and if we set the correct ones we&rsquo;ll get redirected to /admin which will give us an administrator error, because we haven&rsquo;t configured it yet!</p>
 
-    /**
-     * Users model config
-     */
+<h2>Configuring administrator and our first &ldquo;model-admin&rdquo;</h2>
 
-    return array(
+<p>First of all we&rsquo;ll need to create a few directories as per our config.</p>
 
-        'title' =&gt; 'Users',
-        'single' =&gt; 'user',
-        'model' =&gt; 'User',
+<p>Open <em>app/config/packages/frozennode/administrator/administrator.php</em> (if you don&rsquo;t have it make sure you ran <em>php artisan config:publish frozennode/administrator</em> on the first step.)</p>
 
-        'columns' =&gt; array(
-            'email' =&gt; array(
-                'title' =&gt; 'Email',
-            ),
-            'username' =&gt; array(
-                'title' =&gt; 'First Name',
-            ),
-        ),
+<p>Administrator needs a few directories and files to work that are setup on the following variables</p>
 
-        'edit_fields' =&gt; array(
-            'email' =&gt; array(
-                'title' =&gt; 'Email',
-                'type' =&gt; 'text',
-            ),
-            'username' =&gt; array(
-                'title' =&gt; 'Username',
-                'type' =&gt; 'text',
-            ),
-            'password' =&gt; array(
-                'title' =&gt; 'Password',
-                'type' =&gt; 'password',
-            ),
-        ),
-    );
+<pre><code>'model_config_path' =&gt; app('path') . '/config/administrator',
+'settings_config_path' =&gt; app('path') . '/config/administrator/settings',
 </code></pre>
 
-<p>&#8220;`</p>
+<p>You can change those values to existant directories or just create the path, in our case we&rsquo;ll create <em>app/config/administrator</em> and <em>app/config/administrator/settings</em>.</p>
+
+<p>Next we&rsquo;ll need to add a menu option so administrator shows someting on it (it&rsquo;s required). So we&rsquo;ll edit the menu array and add &lsquo;users&rsquo;. It&rsquo;s important that the menu names are the same than the ones from the model config options, including case.</p>
+
+<pre><code>'menu' =&gt; array('users'),
+</code></pre>
+
+<p>We&rsquo;ll also edit the home_page so it displays us the users editor when we go to /admin.</p>
+
+<pre><code>'home_page' =&gt; 'users',  
+</code></pre>
+
+<p>Finally since our login page is /login we need to change the login_path variable to login</p>
+
+<pre><code>'login_path' =&gt; 'login',
+</code></pre>
+
+<p>And that&rsquo;s all for now. If you try to load we&rsquo;ll still get an error, that&rsquo;s because we haven&rsquo;t configured the user model editor, so time to create our users.php in <em>app/config/administrator</em>.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> &lt;?php
+</span><span class='line'>
+</span><span class='line'>  /**
+</span><span class='line'>   * Users model config
+</span><span class='line'>   */
+</span><span class='line'>
+</span><span class='line'>  return array(
+</span><span class='line'>
+</span><span class='line'>      'title' =&gt; 'Users',
+</span><span class='line'>      'single' =&gt; 'user',
+</span><span class='line'>      'model' =&gt; 'User',
+</span><span class='line'>
+</span><span class='line'>      'columns' =&gt; array(
+</span><span class='line'>          'email' =&gt; array(
+</span><span class='line'>              'title' =&gt; 'Email',
+</span><span class='line'>          ),
+</span><span class='line'>          'username' =&gt; array(
+</span><span class='line'>              'title' =&gt; 'First Name',
+</span><span class='line'>          ),
+</span><span class='line'>      ),
+</span><span class='line'>
+</span><span class='line'>      'edit_fields' =&gt; array(
+</span><span class='line'>          'email' =&gt; array(
+</span><span class='line'>              'title' =&gt; 'Email',
+</span><span class='line'>              'type' =&gt; 'text',
+</span><span class='line'>          ),
+</span><span class='line'>          'username' =&gt; array(
+</span><span class='line'>              'title' =&gt; 'Username',
+</span><span class='line'>              'type' =&gt; 'text',
+</span><span class='line'>          ),
+</span><span class='line'>          'password' =&gt; array(
+</span><span class='line'>              'title' =&gt; 'Password',
+</span><span class='line'>              'type' =&gt; 'password',
+</span><span class='line'>          ),
+</span><span class='line'>      ),
+</span><span class='line'>  );</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
 
 <p>That seems a lot of code but it&rsquo;s pretty simple.</p>
 
