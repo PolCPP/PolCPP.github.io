@@ -4,7 +4,7 @@
   <title><![CDATA[0xC0CAC0DA]]></title>
   <link href="http://PolCPP.github.io/atom.xml" rel="self"/>
   <link href="http://PolCPP.github.io/"/>
-  <updated>2014-06-14T19:51:47+01:00</updated>
+  <updated>2014-06-14T20:14:05+01:00</updated>
   <id>http://PolCPP.github.io/</id>
   <author>
     <name><![CDATA[PolCPP]]></name>
@@ -80,23 +80,39 @@ php artisan generate:seed user
 
 <p>We edit the UserTableSeeder.php that we generated in <em>app/database/seeds</em> and replace its contents with this.</p>
 
-<pre><code>&lt;?php
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;?php
+</span><span class='line'>
+</span><span class='line'>class UserTableSeeder extends Seeder {
+</span><span class='line'>
+</span><span class='line'>  public function run()
+</span><span class='line'>  {
+</span><span class='line'>      User::create([
+</span><span class='line'>          'username'   =&gt; 'admin',
+</span><span class='line'>          'email'      =&gt; 'admin@mysite.com',
+</span><span class='line'>          'password'   =&gt; Hash::make('thepass'),
+</span><span class='line'>          'created_at' =&gt; new DateTime(),
+</span><span class='line'>          'updated_at' =&gt; new DateTime()
+</span><span class='line'>      ]);
+</span><span class='line'>  }
+</span><span class='line'>
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
-class UserTableSeeder extends Seeder {
-
-    public function run()
-    {
-        User::create([
-            'username'   =&gt; 'admin',
-            'email'      =&gt; 'admin@mysite.com',
-            'password'   =&gt; Hash::make('thepass'),
-            'created_at' =&gt; new DateTime(),
-            'updated_at' =&gt; new DateTime()
-        ]);
-    }
-
-}
-</code></pre>
 
 <p>To make it work we&rsquo;ll need to uncomment the following line from DatabaseSeeder.php (same directory as UserTableSeeder).</p>
 
@@ -121,32 +137,57 @@ php artisan db:seed
 
 <p>Now we&rsquo;ll edit our login controller and leave it like this.</p>
 
-<pre><code>&lt;?php
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;?php
+</span><span class='line'>
+</span><span class='line'>class LoginController extends \BaseController {
+</span><span class='line'>
+</span><span class='line'> 
+</span><span class='line'>  public function getIndex()
+</span><span class='line'>  {
+</span><span class='line'>      return View::make('login.index');
+</span><span class='line'>  }
+</span><span class='line'> 
+</span><span class='line'>  public function postIndex()
+</span><span class='line'>  {
+</span><span class='line'>      $username = Input::get('username');
+</span><span class='line'>      $password = Input::get('password');
+</span><span class='line'> 
+</span><span class='line'>      if (Auth::attempt(['username' =&gt; $username, 'password' =&gt; $password]))
+</span><span class='line'>      {
+</span><span class='line'>          return Redirect::intended('/admin');
+</span><span class='line'>      }
+</span><span class='line'> 
+</span><span class='line'>      return Redirect::back()
+</span><span class='line'>          -&gt;withInput()
+</span><span class='line'>          -&gt;withErrors('Username or Password are incorrect.');
+</span><span class='line'>  }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
-class LoginController extends \BaseController {
-
-
-    public function getIndex()
-    {
-        return View::make('login.index');
-    }
-
-    public function postIndex()
-    {
-        $username = Input::get('username');
-        $password = Input::get('password');
-
-        if (Auth::attempt(['username' =&gt; $username, 'password' =&gt; $password]))
-        {
-            return Redirect::intended('/admin');
-        }
-
-        return Redirect::back()
-            -&gt;withInput()
-            -&gt;withErrors('Username or Password are incorrect.');
-    }
-}
-</code></pre>
 
 <p>What we&rsquo;re doing here is pretty simple. When the user navigates to /login we&rsquo;ll display him a login form, and when sendsthat form we&rsquo;ll auth him, in case it fails we&rsquo;ll redirect them back with an error message.</p>
 
@@ -156,68 +197,123 @@ class LoginController extends \BaseController {
 
 <p>Let&rsquo;s start with the base template (<em>app/views/layouts/master.blade.php</em>)</p>
 
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang='en'&gt;
-    &lt;head&gt;
-        &lt;meta http-equiv="content-type" content="text/html; charset=UTF-8"&gt; 
-        &lt;meta charset="utf-8"&gt;
-        &lt;meta name='viewport' content='width=device-width, initial-scale=1'&gt;
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;!DOCTYPE html&gt;
+</span><span class='line'>&lt;html lang='en'&gt;
+</span><span class='line'>  &lt;head&gt;
+</span><span class='line'>      &lt;meta http-equiv="content-type" content="text/html; charset=UTF-8"&gt; 
+</span><span class='line'>      &lt;meta charset="utf-8"&gt;
+</span><span class='line'>      &lt;meta name='viewport' content='width=device-width, initial-scale=1'&gt;
+</span><span class='line'>
+</span><span class='line'>      &lt;title&gt;@yield('title')&lt;/title&gt; 
+</span><span class='line'>      &lt;link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css'&gt;
+</span><span class='line'>      &lt;style&gt;
+</span><span class='line'>          body {
+</span><span class='line'>              margin-top: 10px;
+</span><span class='line'>          }
+</span><span class='line'>      &lt;/style&gt;
+</span><span class='line'>  &lt;/head&gt;
+</span><span class='line'>  &lt;body&gt;
+</span><span class='line'>      &lt;div class='container-fluid'&gt;
+</span><span class='line'>          &lt;div class='row'&gt;
+</span><span class='line'>              @yield('content')
+</span><span class='line'>          &lt;/div&gt;
+</span><span class='line'>      &lt;/div&gt;
+</span><span class='line'>  &lt;/body&gt;
+</span><span class='line'>&lt;/html&gt;</span></code></pre></td></tr></table></div></figure>
 
-        &lt;title&gt;@yield('title')&lt;/title&gt; 
-        &lt;link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css'&gt;
-        &lt;style&gt;
-            body {
-                margin-top: 10px;
-            }
-        &lt;/style&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-        &lt;div class='container-fluid'&gt;
-            &lt;div class='row'&gt;
-                @yield('content')
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
 
 <p>Nothing really fancy here we setup some placeholders like the Title and we just get the latest bootstrap version (<em>3.1.1</em>) and build some basic html.</p>
 
 <p>Now let&rsquo;s get to the login template which i&rsquo;m basing on <a href="http://bootsnipp.com/snippets/featured/compact-login-form-bs-3">this</a>. So create <em>app/views/login/index.blade.php</em> and add these contents:</p>
 
-<pre><code>@extends('layouts.master')
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@extends('layouts.master')
+</span><span class='line'>
+</span><span class='line'>@section('title') Login @stop
+</span><span class='line'>
+</span><span class='line'>@section('content')
+</span><span class='line'>&lt;div class="col-md-4 col-md-offset-4"&gt;
+</span><span class='line'>        &lt;div class="panel panel-default"&gt;
+</span><span class='line'>                &lt;div class="panel-heading"&gt;
+</span><span class='line'>                        &lt;h3 class="panel-title"&gt;Please sign in&lt;/h3&gt;
+</span><span class='line'>                &lt;/div&gt;
+</span><span class='line'>                &lt;div class="panel-body"&gt;
+</span><span class='line'>                        @if ($errors-&gt;has())
+</span><span class='line'>                                @foreach ($errors-&gt;all() as $error)
+</span><span class='line'>                                        &lt;div class='alert-danger alert'&gt;{{ $error }}&lt;/div&gt;
+</span><span class='line'>                                @endforeach
+</span><span class='line'>                        @endif
+</span><span class='line'>
+</span><span class='line'>                        {{ Form::open(['role' =&gt; 'form']) }}
+</span><span class='line'>                        &lt;fieldset&gt;
+</span><span class='line'>                                &lt;div class="form-group"&gt;
+</span><span class='line'>                                        {{ Form::text('username', null, ['placeholder' =&gt; 'Username', 'class' =&gt; 'form-control']) }}
+</span><span class='line'>                                &lt;/div&gt;
+</span><span class='line'>                                &lt;div class="form-group"&gt;
+</span><span class='line'>                                        {{ Form::password('password', ['placeholder' =&gt; 'Password', 'class' =&gt; 'form-control']) }}
+</span><span class='line'>                                &lt;/div&gt;
+</span><span class='line'>                                        {{ Form::submit('Login', ['class' =&gt; 'btn btn-primary']) }}
+</span><span class='line'>                        &lt;/fieldset&gt;
+</span><span class='line'>                        {{ Form::close() }}
+</span><span class='line'>                &lt;/div&gt;
+</span><span class='line'>        &lt;/div&gt;
+</span><span class='line'>&lt;/div&gt;
+</span><span class='line'>@stop</span></code></pre></td></tr></table></div></figure>
 
-@section('title') Login @stop
-
-@section('content')
-&lt;div class="col-md-4 col-md-offset-4"&gt;
-        &lt;div class="panel panel-default"&gt;
-                &lt;div class="panel-heading"&gt;
-                        &lt;h3 class="panel-title"&gt;Please sign in&lt;/h3&gt;
-                &lt;/div&gt;
-                &lt;div class="panel-body"&gt;
-                        @if ($errors-&gt;has())
-                                @foreach ($errors-&gt;all() as $error)
-                                        &lt;div class='alert-danger alert'&gt;&lt;/div&gt;
-                                @endforeach
-                        @endif
-
-
-                        &lt;fieldset&gt;
-                                &lt;div class="form-group"&gt;
-
-                                &lt;/div&gt;
-                                &lt;div class="form-group"&gt;
-
-                                &lt;/div&gt;
-
-                        &lt;/fieldset&gt;
-
-                &lt;/div&gt;
-        &lt;/div&gt;
-&lt;/div&gt;
-@stop
-</code></pre>
 
 <p>And that it. If we run it using <strong>php artisan serve</strong> navigate to localhost:8000/login and try to login with incorrect credentials will fail, and if we set the correct ones we&rsquo;ll get redirected to /admin which will give us an administrator error, because we haven&rsquo;t configured it yet!</p>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Laravel | 0xC0CAC0DA]]></title>
   <link href="http://PolCPP.github.io/blog/categories/laravel/atom.xml" rel="self"/>
   <link href="http://PolCPP.github.io/"/>
-  <updated>2014-06-14T19:51:47+01:00</updated>
+  <updated>2014-06-14T20:14:05+01:00</updated>
   <id>http://PolCPP.github.io/</id>
   <author>
     <name><![CDATA[PolCPP]]></name>
@@ -80,6 +80,8 @@ php artisan generate:seed user
 
 <p>We edit the UserTableSeeder.php that we generated in <em>app/database/seeds</em> and replace its contents with this.</p>
 
+<p>```</p>
+
 <pre><code>&lt;?php
 
 class UserTableSeeder extends Seeder {
@@ -97,6 +99,8 @@ class UserTableSeeder extends Seeder {
 
 }
 </code></pre>
+
+<p>```</p>
 
 <p>To make it work we&rsquo;ll need to uncomment the following line from DatabaseSeeder.php (same directory as UserTableSeeder).</p>
 
@@ -120,6 +124,8 @@ php artisan db:seed
 </code></pre>
 
 <p>Now we&rsquo;ll edit our login controller and leave it like this.</p>
+
+<p>```</p>
 
 <pre><code>&lt;?php
 
@@ -148,6 +154,8 @@ class LoginController extends \BaseController {
 }
 </code></pre>
 
+<p>```</p>
+
 <p>What we&rsquo;re doing here is pretty simple. When the user navigates to /login we&rsquo;ll display him a login form, and when sendsthat form we&rsquo;ll auth him, in case it fails we&rsquo;ll redirect them back with an error message.</p>
 
 <p>Since we have the controller done let&rsquo;s build the templates</p>
@@ -155,6 +163,9 @@ class LoginController extends \BaseController {
 <p>First we build the structure. We&rsquo;ll need a base template that we&rsquo;ll store on <em>app/views/layouts</em>. and then our login.index view that we will store on <em>views/login</em></p>
 
 <p>Let&rsquo;s start with the base template (<em>app/views/layouts/master.blade.php</em>)</p>
+
+<p>
+```</p>
 
 <pre><code>&lt;!DOCTYPE html&gt;
 &lt;html lang='en'&gt;
@@ -181,9 +192,15 @@ class LoginController extends \BaseController {
 &lt;/html&gt;
 </code></pre>
 
+<p>```
+</p>
+
 <p>Nothing really fancy here we setup some placeholders like the Title and we just get the latest bootstrap version (<em>3.1.1</em>) and build some basic html.</p>
 
 <p>Now let&rsquo;s get to the login template which i&rsquo;m basing on <a href="http://bootsnipp.com/snippets/featured/compact-login-form-bs-3">this</a>. So create <em>app/views/login/index.blade.php</em> and add these contents:</p>
+
+<p>
+```</p>
 
 <pre><code>@extends('layouts.master')
 
@@ -198,26 +215,29 @@ class LoginController extends \BaseController {
                 &lt;div class="panel-body"&gt;
                         @if ($errors-&gt;has())
                                 @foreach ($errors-&gt;all() as $error)
-                                        &lt;div class='alert-danger alert'&gt;&lt;/div&gt;
+                                        &lt;div class='alert-danger alert'&gt;{{ $error }}&lt;/div&gt;
                                 @endforeach
                         @endif
 
-                        
+                        {{ Form::open(['role' =&gt; 'form']) }}
                         &lt;fieldset&gt;
                                 &lt;div class="form-group"&gt;
-                                        
+                                        {{ Form::text('username', null, ['placeholder' =&gt; 'Username', 'class' =&gt; 'form-control']) }}
                                 &lt;/div&gt;
                                 &lt;div class="form-group"&gt;
-                                        
+                                        {{ Form::password('password', ['placeholder' =&gt; 'Password', 'class' =&gt; 'form-control']) }}
                                 &lt;/div&gt;
-                                        
+                                        {{ Form::submit('Login', ['class' =&gt; 'btn btn-primary']) }}
                         &lt;/fieldset&gt;
-                        
+                        {{ Form::close() }}
                 &lt;/div&gt;
         &lt;/div&gt;
 &lt;/div&gt;
 @stop
 </code></pre>
+
+<p>```
+</p>
 
 <p>And that it. If we run it using <strong>php artisan serve</strong> navigate to localhost:8000/login and try to login with incorrect credentials will fail, and if we set the correct ones we&rsquo;ll get redirected to /admin which will give us an administrator error, because we haven&rsquo;t configured it yet!</p>
 
