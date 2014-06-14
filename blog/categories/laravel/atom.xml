@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Laravel | 0xC0CAC0DA]]></title>
   <link href="http://PolCPP.github.io/blog/categories/laravel/atom.xml" rel="self"/>
   <link href="http://PolCPP.github.io/"/>
-  <updated>2014-06-12T19:22:15+01:00</updated>
+  <updated>2014-06-14T19:51:47+01:00</updated>
   <id>http://PolCPP.github.io/</id>
   <author>
     <name><![CDATA[PolCPP]]></name>
@@ -72,7 +72,7 @@ php artisan asset:publish frozennode/administrator
 <pre><code>'Way\Generators\GeneratorsServiceProvider'
 </code></pre>
 
-<p>Now with al the tools installed, let&rsquo;s get ot work and create the migration and seed.</p>
+<p>Now with al the tools installed, let&rsquo;s get to work and create the migration and seed.</p>
 
 <pre><code>php artisan generate:migration create_users_table --fields="username:string, email:string, password:string"
 php artisan generate:seed user
@@ -181,7 +181,7 @@ class LoginController extends \BaseController {
 &lt;/html&gt;
 </code></pre>
 
-<p>Nothing really fancy here we setup some placeholders like the Title and we just get the latest bootstrap (<em>3.1.1</em>) and build some basic html.</p>
+<p>Nothing really fancy here we setup some placeholders like the Title and we just get the latest bootstrap version (<em>3.1.1</em>) and build some basic html.</p>
 
 <p>Now let&rsquo;s get to the login template which i&rsquo;m basing on <a href="http://bootsnipp.com/snippets/featured/compact-login-form-bs-3">this</a>. So create <em>app/views/login/index.blade.php</em> and add these contents:</p>
 
@@ -190,32 +190,32 @@ class LoginController extends \BaseController {
 @section('title') Login @stop
 
 @section('content')
-                &lt;div class="col-md-4 col-md-offset-4"&gt;
-                    &lt;div class="panel panel-default"&gt;
-                        &lt;div class="panel-heading"&gt;
-                            &lt;h3 class="panel-title"&gt;Please sign in&lt;/h3&gt;
-                        &lt;/div&gt;
-                        &lt;div class="panel-body"&gt;
-                            @if ($errors-&gt;has())
+&lt;div class="col-md-4 col-md-offset-4"&gt;
+        &lt;div class="panel panel-default"&gt;
+                &lt;div class="panel-heading"&gt;
+                        &lt;h3 class="panel-title"&gt;Please sign in&lt;/h3&gt;
+                &lt;/div&gt;
+                &lt;div class="panel-body"&gt;
+                        @if ($errors-&gt;has())
                                 @foreach ($errors-&gt;all() as $error)
-                                    &lt;div class='alert-danger alert'&gt;&lt;/div&gt;
+                                        &lt;div class='alert-danger alert'&gt;&lt;/div&gt;
                                 @endforeach
-                            @endif
+                        @endif
 
-                            
-                            &lt;fieldset&gt;
+                        
+                        &lt;fieldset&gt;
                                 &lt;div class="form-group"&gt;
                                         
                                 &lt;/div&gt;
                                 &lt;div class="form-group"&gt;
-                                    
+                                        
                                 &lt;/div&gt;
-                                    
-                            &lt;/fieldset&gt;
-                            
-                        &lt;/div&gt;
-                    &lt;/div&gt;
+                                        
+                        &lt;/fieldset&gt;
+                        
                 &lt;/div&gt;
+        &lt;/div&gt;
+&lt;/div&gt;
 @stop
 </code></pre>
 
@@ -313,11 +313,11 @@ class LoginController extends \BaseController {
 
 <p>And we&rsquo;re done, kinda, try to add an user and leave it blank. Even if we have nulls on our database it saves blank characters, and we shouldn&rsquo;t allow that. Don&rsquo;t worry, validation to the rescue. Add this to the model and we will have validation.</p>
 
-<pre><code>private $rules = array(
+<pre><code>public static $rules = array(
         'username' =&gt; 'required',
         'email' =&gt; 'required|email|unique:users',
         'password' =&gt; 'required|min:8',        
-);    
+);
 </code></pre>
 
 <p>I recommend you to put those validation rules on the model instead of using the administrator rules option. The reaons is that on fields like password that has mutators it would give false positives since hashing an empty value would create a hash that would pass the validation.</p>
