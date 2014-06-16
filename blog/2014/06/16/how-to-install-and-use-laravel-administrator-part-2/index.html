@@ -1,24 +1,99 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[0xC0CAC0DA]]></title>
-  <link href="http://PolCPP.github.io/atom.xml" rel="self"/>
-  <link href="http://PolCPP.github.io/"/>
-  <updated>2014-06-16T16:53:53+01:00</updated>
-  <id>http://PolCPP.github.io/</id>
-  <author>
-    <name><![CDATA[PolCPP]]></name>
-    
-  </author>
-  <generator uri="http://octopress.org/">Octopress</generator>
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>How to install and use Laravel Administrator Part 2 - 0xC0CAC0DA</title>
+  <meta name="author" content="PolCPP">
 
   
-  <entry>
-    <title type="html"><![CDATA[How to install and use Laravel Administrator Part 2]]></title>
-    <link href="http://PolCPP.github.io/blog/2014/06/16/how-to-install-and-use-laravel-administrator-part-2/"/>
-    <updated>2014-06-16T15:34:01+01:00</updated>
-    <id>http://PolCPP.github.io/blog/2014/06/16/how-to-install-and-use-laravel-administrator-part-2</id>
-    <content type="html"><![CDATA[<p>In our previous post we installed Laravel 4.2, created a very simple auth system and configured Frozennode administrator to edit the users model, in this second part we&rsquo;ll build a real(ish) world case creating a model with some relationships and see how it performs on the administrator.</p>
+  <meta name="description" content="In our previous post we installed Laravel 4.2, created a very simple auth system and configured Frozennode administrator to edit the users model, in &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://PolCPP.github.io/blog/2014/06/16/how-to-install-and-use-laravel-administrator-part-2">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="0xC0CAC0DA" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="https://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+
+  
+
+</head>
+
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">0xC0CAC0DA</a></h1>
+  
+    <h2>Rants and code from PolCPP.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:PolCPP.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">How to Install and Use Laravel Administrator Part 2</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-16T15:34:01+01:00" pubdate data-updated="true">Jun 16<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>In our previous post we installed Laravel 4.2, created a very simple auth system and configured Frozennode administrator to edit the users model, in this second part we&rsquo;ll build a real(ish) world case creating a model with some relationships and see how it performs on the administrator.</p>
 
 <!-- more -->
 
@@ -445,7 +520,7 @@ TestDrop: drop rate is: 12.34
 </span><span class='line'>          ),
 </span><span class='line'>          'image' =&gt; array (
 </span><span class='line'>              'title' =&gt; 'Image',
-</span><span class='line'>              'output' =&gt; '&lt;img src="http://PolCPP.github.io/uploads/items/(:value)" height="100" /&gt;',
+</span><span class='line'>              'output' =&gt; '&lt;img src="/uploads/items/(:value)" height="100" /&gt;',
 </span><span class='line'>          ),
 </span><span class='line'>          'drops' =&gt; array (
 </span><span class='line'>              'title' =&gt; 'Dropped by',
@@ -699,7 +774,7 @@ TestDrop: drop rate is: 12.34
 </span><span class='line'>          ),
 </span><span class='line'>          'image' =&gt; array(
 </span><span class='line'>              'title' =&gt; 'image',
-</span><span class='line'>              'output' =&gt; '&lt;img src="http://PolCPP.github.io/uploads/items/(:value)" height="100" /&gt;',
+</span><span class='line'>              'output' =&gt; '&lt;img src="/uploads/items/(:value)" height="100" /&gt;',
 </span><span class='line'>          ),
 </span><span class='line'>          'drops' =&gt; array(
 </span><span class='line'>              'title' =&gt; 'enemy drops',
@@ -990,469 +1065,102 @@ TestDrop: drop rate is: 12.34
 <p>That&rsquo;s all, we&rsquo;re done with this two part tutorial. I Hope it was useful.</p>
 
 <p>As with the previous one you can access the repo of this tutorial by clicking <a href="https://github.com/PolCPP/Laravel-administrator-tutorial">here</a></p>
-]]></content>
-  </entry>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
   
-  <entry>
-    <title type="html"><![CDATA[How to install and use Laravel administrator Part 1]]></title>
-    <link href="http://PolCPP.github.io/blog/2014/06/12/how-to-install-and-use-laravel-administrator-part-1/"/>
-    <updated>2014-06-12T16:20:53+01:00</updated>
-    <id>http://PolCPP.github.io/blog/2014/06/12/how-to-install-and-use-laravel-administrator-part-1</id>
-    <content type="html"><![CDATA[<p>Trying to get FrozenNode&rsquo;s laravel administrator bundle to work, i saw that there was no guide that set you up from zero to go with Laravel and administrator. This set of guides will cover the basic Laravel setup with administrator and later on setting up more advanced models.</p>
 
-<!-- more -->
+<span class="byline author vcard">Posted by <span class="fn">PolCPP</span></span>
 
+      
 
-<p>First of all we install Laravel, get inside the directory and install frozennode administrator.</p>
 
-<pre><code>composer create-project laravel/laravel admin_project --prefer-dist
-cd admin_project
-composer require frozennode/administrator:dev-master
-</code></pre>
 
-<p>Make sure you add this line to the providers array in <em>/app/config/app.php</em></p>
 
-<pre><code>'Frozennode\Administrator\AdministratorServiceProvider',
-</code></pre>
 
-<p>Once this is done you just have to publish the config and assets into the project with these two commands.</p>
 
-<pre><code>php artisan config:publish frozennode/administrator 
-php artisan asset:publish frozennode/administrator
-</code></pre>
 
-<p>Now we setup the project to work locally on the database.</p>
 
-<ol>
-<li><p>Edit the start.php to add your computer name to the array.</p>
-
-<pre><code> $env = $app-&gt;detectEnvironment(array(
-     'local' =&gt; array('homestead','myComputer'),
- ));
-</code></pre></li>
-<li><p>Edit app/config/local/database.php with working database settings. If the file doesn&rsquo;t exist make a copy from app/config/database.php</p></li>
-</ol>
-
-
-<p>And it&rsquo;s installed! But we&rsquo;re not done yet.</p>
-
-<h2>Creating a simple auth</h2>
-
-<p>Administrator is auth agnostic so you can use your own custom built auth, Sentry or any plugabble auth system compatible with Laravel, in our case we&rsquo;ll build a simple auth system based on Laravel auth that will let us in.</p>
-
-<p>If you have your own custom login procedure you can completely skip this step.</p>
-
-<p>I&rsquo;m going to use Jeffrey Way generators to make things faster so we install it too.</p>
-
-<pre><code>composer require --dev way/generators:dev-master
-</code></pre>
-
-<p>Like with administrator we add it to providers</p>
-
-<pre><code>'Way\Generators\GeneratorsServiceProvider'
-</code></pre>
-
-<p>Now with al the tools installed, let&rsquo;s get to work and create the migration and seed.</p>
-
-<pre><code>php artisan generate:migration create_users_table --fields="username:string, email:string, password:string"
-php artisan generate:seed user
-</code></pre>
-
-<p>We edit the UserTableSeeder.php that we generated in <em>app/database/seeds</em> and replace its contents with this.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;?php
-</span><span class='line'>
-</span><span class='line'>class UserTableSeeder extends Seeder {
-</span><span class='line'>
-</span><span class='line'>  public function run()
-</span><span class='line'>  {
-</span><span class='line'>      User::create([
-</span><span class='line'>          'username'   =&gt; 'admin',
-</span><span class='line'>          'email'      =&gt; 'admin@mysite.com',
-</span><span class='line'>          'password'   =&gt; Hash::make('thepass'),
-</span><span class='line'>          'created_at' =&gt; new DateTime(),
-</span><span class='line'>          'updated_at' =&gt; new DateTime()
-</span><span class='line'>      ]);
-</span><span class='line'>  }
-</span><span class='line'>
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-
-<p>To make it work we&rsquo;ll need to uncomment the following line from DatabaseSeeder.php (same directory as UserTableSeeder).</p>
-
-<pre><code>$this-&gt;call('UserTableSeeder');
-</code></pre>
-
-<p>Now let&rsquo;s migrate the database and seed it before building the login page and it&rsquo;s controllers.</p>
-
-<pre><code>php artisan migrate
-php artisan db:seed
-</code></pre>
-
-<p>And with this we have our database up and running, with a working user. Time to build the controller and templates to be able to log in.</p>
-
-<pre><code>php artisan generate:controller LoginController
-</code></pre>
-
-<p>Before starting to add the controllers we&rsquo;ll add a route editing app/routes.php so Laravel shows us the login page when we go to <em>myCoolSite.com/login</em></p>
-
-<pre><code>Route::controller('/login', 'LoginController');
-</code></pre>
-
-<p>Now we&rsquo;ll edit our login controller and leave it like this.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;?php
-</span><span class='line'>
-</span><span class='line'>class LoginController extends \BaseController {
-</span><span class='line'>
-</span><span class='line'> 
-</span><span class='line'>  public function getIndex()
-</span><span class='line'>  {
-</span><span class='line'>      return View::make('login.index');
-</span><span class='line'>  }
-</span><span class='line'> 
-</span><span class='line'>  public function postIndex()
-</span><span class='line'>  {
-</span><span class='line'>      $username = Input::get('username');
-</span><span class='line'>      $password = Input::get('password');
-</span><span class='line'> 
-</span><span class='line'>      if (Auth::attempt(['username' =&gt; $username, 'password' =&gt; $password]))
-</span><span class='line'>      {
-</span><span class='line'>          return Redirect::intended('/admin');
-</span><span class='line'>      }
-</span><span class='line'> 
-</span><span class='line'>      return Redirect::back()
-</span><span class='line'>          -&gt;withInput()
-</span><span class='line'>          -&gt;withErrors('Username or Password are incorrect.');
-</span><span class='line'>  }
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-
-<p>What we&rsquo;re doing here is pretty simple. When the user navigates to /login we&rsquo;ll display him a login form, and when sendsthat form we&rsquo;ll auth him, in case it fails we&rsquo;ll redirect them back with an error message.</p>
-
-<p>Since we have the controller done let&rsquo;s build the templates</p>
-
-<p>First we&rsquo;re going to build the structure. We&rsquo;ll need a base template that we&rsquo;ll store on <em>app/views/layouts</em>. and then our login.index view that we will store on <em>views/login</em></p>
-
-<p>So let&rsquo;s start with the base template (<em>app/views/layouts/master.blade.php</em>)</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;!DOCTYPE html&gt;
-</span><span class='line'>&lt;html lang='en'&gt;
-</span><span class='line'>  &lt;head&gt;
-</span><span class='line'>      &lt;meta http-equiv="content-type" content="text/html; charset=UTF-8"&gt; 
-</span><span class='line'>      &lt;meta charset="utf-8"&gt;
-</span><span class='line'>      &lt;meta name='viewport' content='width=device-width, initial-scale=1'&gt;
-</span><span class='line'>
-</span><span class='line'>      &lt;title&gt;@yield('title')&lt;/title&gt; 
-</span><span class='line'>      &lt;link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css'&gt;
-</span><span class='line'>      &lt;style&gt;
-</span><span class='line'>          body {
-</span><span class='line'>              margin-top: 10px;
-</span><span class='line'>          }
-</span><span class='line'>      &lt;/style&gt;
-</span><span class='line'>  &lt;/head&gt;
-</span><span class='line'>  &lt;body&gt;
-</span><span class='line'>      &lt;div class='container-fluid'&gt;
-</span><span class='line'>          &lt;div class='row'&gt;
-</span><span class='line'>              @yield('content')
-</span><span class='line'>          &lt;/div&gt;
-</span><span class='line'>      &lt;/div&gt;
-</span><span class='line'>  &lt;/body&gt;
-</span><span class='line'>&lt;/html&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Nothing really fancy here we setup some placeholders like the Title and we just get the latest bootstrap version (<em>3.1.1</em>) and build some basic html.</p>
-
-<p>Now let&rsquo;s get to the login template which i&rsquo;m basing on <a href="http://bootsnipp.com/snippets/featured/compact-login-form-bs-3">this</a>. So create <em>app/views/login/index.blade.php</em> and add these contents:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>@extends('layouts.master')
-</span><span class='line'>
-</span><span class='line'>@section('title') Login @stop
-</span><span class='line'>
-</span><span class='line'>@section('content')
-</span><span class='line'>&lt;div class="col-md-4 col-md-offset-4"&gt;
-</span><span class='line'>        &lt;div class="panel panel-default"&gt;
-</span><span class='line'>                &lt;div class="panel-heading"&gt;
-</span><span class='line'>                        &lt;h3 class="panel-title"&gt;Please sign in&lt;/h3&gt;
-</span><span class='line'>                &lt;/div&gt;
-</span><span class='line'>                &lt;div class="panel-body"&gt;
-</span><span class='line'>                        @if ($errors-&gt;has())
-</span><span class='line'>                                @foreach ($errors-&gt;all() as $error)
-</span><span class='line'>                                        &lt;div class='alert-danger alert'&gt;{{ $error }}&lt;/div&gt;
-</span><span class='line'>                                @endforeach
-</span><span class='line'>                        @endif
-</span><span class='line'>
-</span><span class='line'>                        {{ Form::open(['role' =&gt; 'form']) }}
-</span><span class='line'>                        &lt;fieldset&gt;
-</span><span class='line'>                                &lt;div class="form-group"&gt;
-</span><span class='line'>                                        {{ Form::text('username', null, ['placeholder' =&gt; 'Username', 'class' =&gt; 'form-control']) }}
-</span><span class='line'>                                &lt;/div&gt;
-</span><span class='line'>                                &lt;div class="form-group"&gt;
-</span><span class='line'>                                        {{ Form::password('password', ['placeholder' =&gt; 'Password', 'class' =&gt; 'form-control']) }}
-</span><span class='line'>                                &lt;/div&gt;
-</span><span class='line'>                                        {{ Form::submit('Login', ['class' =&gt; 'btn btn-primary']) }}
-</span><span class='line'>                        &lt;/fieldset&gt;
-</span><span class='line'>                        {{ Form::close() }}
-</span><span class='line'>                &lt;/div&gt;
-</span><span class='line'>        &lt;/div&gt;
-</span><span class='line'>&lt;/div&gt;
-</span><span class='line'>@stop</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And that it. If we run it using <strong>php artisan serve</strong> navigate to localhost:8000/login and try to login with incorrect credentials will fail, and if we set the correct ones we&rsquo;ll get redirected to /admin which will give us an administrator error, because we haven&rsquo;t configured it yet!</p>
-
-<h2>Configuring administrator and our first &ldquo;model-admin&rdquo;</h2>
-
-<p>First of all we&rsquo;ll need to create a few directories as per our config.</p>
-
-<p>Open <em>app/config/packages/frozennode/administrator/administrator.php</em> (if you don&rsquo;t have it make sure you ran <em>php artisan config:publish frozennode/administrator</em> on the first step.)</p>
-
-<p>Administrator needs a few directories and files to work that are setup on the following variables</p>
-
-<pre><code>'model_config_path' =&gt; app('path') . '/config/administrator',
-'settings_config_path' =&gt; app('path') . '/config/administrator/settings',
-</code></pre>
-
-<p>You can change those values to existant directories or just create the path, in our case we&rsquo;ll create <em>app/config/administrator</em> and <em>app/config/administrator/settings</em>.</p>
-
-<p>Next we&rsquo;ll need to add a menu option so administrator shows someting on it (it&rsquo;s required). So we&rsquo;ll edit the menu array and add &lsquo;users&rsquo;. It&rsquo;s important that the menu names are the same than the ones from the model config options, including case.</p>
-
-<pre><code>'menu' =&gt; array('users'),
-</code></pre>
-
-<p>We&rsquo;ll also edit the home_page so it displays us the users editor when we go to /admin.</p>
-
-<pre><code>'home_page' =&gt; 'users',  
-</code></pre>
-
-<p>Finally since our login page is /login we need to change the login_path variable to login</p>
-
-<pre><code>'login_path' =&gt; 'login',
-</code></pre>
-
-<p>And that&rsquo;s all for now. If you try to load we&rsquo;ll still get an error, that&rsquo;s because we haven&rsquo;t configured the user model editor, so time to create our users.php in <em>app/config/administrator</em>.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'> &lt;?php
-</span><span class='line'>
-</span><span class='line'>  /**
-</span><span class='line'>   * Users model config
-</span><span class='line'>   */
-</span><span class='line'>
-</span><span class='line'>  return array(
-</span><span class='line'>
-</span><span class='line'>      'title' =&gt; 'Users',
-</span><span class='line'>      'single' =&gt; 'user',
-</span><span class='line'>      'model' =&gt; 'User',
-</span><span class='line'>
-</span><span class='line'>      'columns' =&gt; array(
-</span><span class='line'>          'email' =&gt; array(
-</span><span class='line'>              'title' =&gt; 'Email',
-</span><span class='line'>          ),
-</span><span class='line'>          'username' =&gt; array(
-</span><span class='line'>              'title' =&gt; 'First Name',
-</span><span class='line'>          ),
-</span><span class='line'>      ),
-</span><span class='line'>
-</span><span class='line'>      'edit_fields' =&gt; array(
-</span><span class='line'>          'email' =&gt; array(
-</span><span class='line'>              'title' =&gt; 'Email',
-</span><span class='line'>              'type' =&gt; 'text',
-</span><span class='line'>          ),
-</span><span class='line'>          'username' =&gt; array(
-</span><span class='line'>              'title' =&gt; 'Username',
-</span><span class='line'>              'type' =&gt; 'text',
-</span><span class='line'>          ),
-</span><span class='line'>          'password' =&gt; array(
-</span><span class='line'>              'title' =&gt; 'Password',
-</span><span class='line'>              'type' =&gt; 'password',
-</span><span class='line'>          ),
-</span><span class='line'>      ),
-</span><span class='line'>  );</span></code></pre></td></tr></table></div></figure>
-
-
-<p></p>
-
-<p>That seems a lot of code but it&rsquo;s pretty simple.</p>
-
-<ol>
-<li><p>Title. Refers to the page/menu titles.</p></li>
-<li><p>Single. The singular name of the model. It&rsquo;s used to fill the administrator texts like the &ldquo;Create User&rdquo; button.</p></li>
-<li><p>Model. The model name.</p></li>
-<li><p>Columns. The columns you want to display on the list viewer of the model.</p></li>
-<li><p>Edit_fields. The fields you want to be able to edit/create. If you want to know more details on the fields, check the <a href="http://administrator.frozennode.com/docs/fields">following site</a></p></li>
-</ol>
-
-
-<p>There are a lot of configurable settings so check <a href="http://administrator.frozennode.com/docs/model-configuration">http://administrator.frozennode.com/docs/model-configuration</a> to see all that you can build with administrator.</p>
-
-<p>And that&rsquo;s it. There are a few details that you should have in mind though. First is that if we leave it like this the passwords that we save will be stored in plain text and won&rsquo;t work for authorization. But you can fix that easily adding this mutator to the User model.</p>
-
-<pre><code>public function setPasswordAttribute($value)
-{
-    $this-&gt;attributes['password']  = $value;
-}
-</code></pre>
-
-<p>And we&rsquo;re done, kinda, try to add an user and leave it blank. Even if we have nulls on our database it saves blank characters, and we shouldn&rsquo;t allow that. Don&rsquo;t worry, validation to the rescue. Add this to the model and we will have validation.</p>
-
-<pre><code>public static $rules = array(
-        'username' =&gt; 'required',
-        'email' =&gt; 'required|email|unique:users',
-        'password' =&gt; 'required|min:8',        
-);
-</code></pre>
-
-<p>I recommend you to put those validation rules on the model instead of using the administrator rules option. The reaons is that on fields like password that has mutators it would give false positives since hashing an empty value would create a hash that would pass the validation.</p>
-
-<p>And that&rsquo;s all for Part 1. On part 2 we&rsquo;ll create a real case of a view/admin and add it to this project.</p>
-
-<p>You can clone/view the repo of this project <a href="https://github.com/PolCPP/Laravel-administrator-tutorial">here</a></p>
-]]></content>
-  </entry>
   
-  <entry>
-    <title type="html"><![CDATA[Hello World]]></title>
-    <link href="http://PolCPP.github.io/blog/2014/06/11/hello-world/"/>
-    <updated>2014-06-11T16:12:53+01:00</updated>
-    <id>http://PolCPP.github.io/blog/2014/06/11/hello-world</id>
-    <content type="html"><![CDATA[<p>So here i am starting another blog, but this time on octopress.</p>
 
-<p>I&rsquo;ve Been using wordpress and other platforms (like tumblr) for a while but i keep stopping writing because they&rsquo;re heavy and clunky, i forget their passwords and urls plus i rather write things in markdown.</p>
 
-<p>And what the heck, using github to host your blog? That&rsquo;s awesome!</p>
-]]></content>
-  </entry>
+<time datetime="2014-06-16T15:34:01+01:00" pubdate data-updated="true">Jun 16<span>th</span>, 2014</time>
+      
+
+<span class="categories">
   
-</feed>
+    <a class='category' href='/blog/categories/administrator/'>Administrator</a>, <a class='category' href='/blog/categories/frozennode/'>FrozenNode</a>, <a class='category' href='/blog/categories/laravel/'>Laravel</a>, <a class='category' href='/blog/categories/php/'>PHP</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://PolCPP.github.io/blog/2014/06/16/how-to-install-and-use-laravel-administrator-part-2/" data-via="" data-counturl="http://PolCPP.github.io/blog/2014/06/16/how-to-install-and-use-laravel-administrator-part-2/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/06/12/how-to-install-and-use-laravel-administrator-part-1/" title="Previous Post: How to install and use Laravel administrator Part 1">&laquo; How to install and use Laravel administrator Part 1</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - PolCPP -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> | Themed with <a href="https://github.com/lucaslew/whitespace">Whitespace</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'https://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
